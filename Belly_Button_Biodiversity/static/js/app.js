@@ -86,7 +86,8 @@ function buildCharts(sample) {
       hovermode: 'closest',
       title: 'Belly Button Biodiversity of Sample',
       xaxis: {
-        title: 'UTO ID'
+        title: 'UTO ID',
+        zeroline: false
       }
     };
 
