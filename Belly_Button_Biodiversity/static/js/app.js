@@ -1,29 +1,101 @@
 function buildMetadata(sample) {
 
-  // @TODO: Complete the following function that builds the metadata panel
+  // Get url of metadata
+  var url = `/metadata/${sample}`;
 
-  // Use `d3.json` to fetch the metadata for a sample
-    // Use d3 to select the panel with id of `#sample-metadata`
+  // Select area to place metadata
+  var panel = d3.select("#sample-metadata");
 
-    // Use `.html("") to clear any existing metadata
+  // Clear previous html
+  panel.html("");
 
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
+  // Get metadata in json from url
+  d3.json(url).then(data => {
 
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
+    // Get keys and values of data
+    Object.entries(data).forEach(([key,value]) => {
+
+      // Create new line
+      var line = panel.append("p")
+
+      // Write key and value to line
+      line.text(`${key}: ${value}`)
+    });
+  });
 }
 
 function buildCharts(sample) {
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
+  // Get url of sample data
+  var url =`/samples/${sample}`;
 
-    // @TODO: Build a Bubble Chart using the sample data
+  // Get sample data in json from url
+  d3.json(url).then(data =>  {
 
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
+    // Create variables of the top 10 species
+    var pieLabels = data['otu_ids'].slice(0,10);
+    var pieValues = data['sample_values'].slice(0,10);
+    var pieHover = data['otu_labels'].slice(0,10);
+
+    // Create variables of all species
+    var bubbleX = data['otu_ids'];
+    var bubbleY = data['sample_values'];
+    var bubbleText = data['otu_labels'];
+
+    // Format pie chart data for plotly
+    var pieData = [{
+      values: pieValues,
+      labels: pieLabels,
+      hovertext: pieHover,
+      hovertemplate: '<b>%{text}</b><br>' +
+        'UTO ID: %{label}<br>' +
+        'Value: %{value}<br>' +
+        '%{percent}' +
+        '<extra></extra>',
+      type: "pie"
+    }];
+
+    // Format pie chart layout
+    var pieLayout = {
+      height: 500,
+      width: 700,
+      title: 'Distribution of Top Ten Species in Belly Button'
+    };
+
+    //Format bubble chart data for plotly
+    var bubbleData = [{
+      x: bubbleX,
+      y: bubbleY,
+      text: bubbleText,
+      hovertemplate: '<b>%{text}</b><br>' +
+        'UTO ID: %{x}<br>' + 
+        'Value: %{y}' + 
+        '<extra></extra>',
+      mode: 'markers',
+      marker: {
+        color: bubbleX,
+        colorscale: 'Portland',
+        size: bubbleY
+      }
+    }];
+
+    // Format bubble chart layout
+    var bubbleLayout = {
+      height: 750,
+      width: 1200,
+      hovermode: 'closest',
+      title: 'Belly Button Biodiversity of Sample',
+      xaxis: {
+        title: 'UTO ID'
+      }
+    };
+
+    //Create plotly plots
+    Plotly.newPlot("pie", pieData, pieLayout);
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+
+  });
+
 }
 
 function init() {
