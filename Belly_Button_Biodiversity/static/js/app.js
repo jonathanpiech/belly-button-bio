@@ -1,6 +1,6 @@
 function buildMetadata(sample) {
 
-  // Get url of metadata
+  // Get URL of metadata
   var url = `/metadata/${sample}`;
 
   // Select area to place metadata
