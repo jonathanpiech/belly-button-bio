@@ -9,4 +9,4 @@ This project is a dashboard that looks at data on microbes found in belly button
 This project uses SQL databases, Python Flask, SQLAlchemy and Plotly Javascript library to create the dashboard.
 
 ## Requirements
-This project needs the following Python modules: pandas, sqlalchemy, flask, flask_sqlalchemy. To run on your own, you can use python3 app.py to display in your browser.
+This project needs the following Python modules: pandas, sqlalchemy, flask, flask_sqlalchemy. To run on your own, you can use `python3 app.py` to display in your browser.
