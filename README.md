@@ -6,7 +6,11 @@ This project is a dashboard that looks at data on microbes found in belly button
 
 ![alt-text](https://raw.githubusercontent.com/jonathanpiech/belly-button-bio/master/bbb1.png "Image of dashboard")
 
-This project uses SQL databases, Python Flask, SQLAlchemy and Plotly Javascript library to create the dashboard.
+## Technologies Used
+- SQL
+- Flask
+- SQLAlchemy
+- Plotly
 
 ## Requirements
 This project needs the following Python modules: pandas, sqlalchemy, flask, flask_sqlalchemy. To run on your own, you can use `python3 app.py` to display in your browser.
